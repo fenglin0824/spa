@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>spa单页面应用</title>
+	</head>
+	<body>
+		<div class="main">
+			<h5 id="spa">什么是单页面应用(spa)</h5>
+			<ul>
+				<li>
+					只有一个页面，通过页面导航点击，url后面的地址#后满的字符串在不停的变化，每变化一次，页面就会跟着局部刷新，成仙不同的内容
+				</li>
+			</ul>
+			<h5 id="tec">实现spa的全部技术</h5>
+			<ul>
+				<li>处理#后面的字符</li>
+				<li>局部刷新</li>
+			</ul>
+			<h5 id="loca">首先了解location属性</h5>
+			<ul>
+				<li>
+					<b>hash</b>设置或返回从#号开始的url描
+				</li>
+				<li>
+					<b>host</b>设置或返回主机名和当前url的端口号（127.0.0.1:8080）
+				</li>
+				<li>
+					<b>hostname</b>设置或返回当前url的主机名(127.0.0.1)
+				</li>
+				<li>
+					<b>href</b>设置或返回完整的url（当前url的完整地址)
+				</li>
+				<li>
+					<b>pathname</b>设置或返回当前url的路径部分
+				</li>
+				<li>
+					<b>port</b>设置或返回当前url的端口号
+				</li>
+				<li>
+					<b>protocol</b>设置或返回当前url的协议(http/https:)
+				</li>
+				<li>
+					<b>search</b>设置或返回从？开始的url（查询部分）
+				</li>
+			</ul>
+			<h5 id="change"> hashchange事件</h5>
+			<ul>
+				<li> 通过hashchange事件，我们可以监视#后面字符，一旦发生改变，就会触发此事件，也是大家常说的URL 的锚部分</li>
+			</ul>
+			<h5 id="ajax">局部刷新AJAX（阿贾克斯）</h5>
+			<ul>
+				<li><a href="index.html">ajax封装</a></li>
+			</ul>
+		</div>
+		<div class="box">
+			<a href="#spa">什么是单页面应用(spa)</a><br />
+			<a href="#tec">实现spa的全部技术</a><br />
+			<a href="#loca">location属性</a><br />
+			<a href="#change">hashchange事件</a><br />
+			<a href="#ajax">局部刷新AJAX（阿贾克斯）</a>
+		</div>
+		<script type="text/javascript" src="js/jquery.min.js" ></script>
+		<script type="text/javascript">
+			//通过hashchange事件来监听hash值的变化，直接使用onhashchange也是一样
+			window.addEventListener('hashchange',function(){
+				//拿到#后面的字符，即是url的锚部分
+				var hash=document.location.hash;
+				//通过判断不同的hash值。从而请求不同的数据来渲染页面
+				//对switch不熟悉，使用if else if else也是一样的
+				switch(hash){
+					case '#spa':
+					//这里是引用ajax
+					$.ajax({
+						url:'./json/spa.json',
+						success:function(result){
+							document.getElementById('spa').innerText=result.haha;
+						}
+					});
+					break;
+					case '#tec':
+					$.ajax({
+						url:'./json/tec.json',
+						success:function(result){
+							document.getElementById('tec').innerText=result[0].name;
+						}
+					});
+					break;
+					case '#loca':
+					$.ajax({
+						url:'json/loca.json',
+						success:function(result){
+							document.getElementById('loca').innerText=result[0].name;
+						}
+					});
+					break;
+					default:
+					$.ajax({
+						url:'json/spa.json',
+						success:function(result){
+							document.getElementById('spa').innerText=result[0].name;
+						}
+					});
+				}
+			})
+		</script>
+	</body>
+</html>
